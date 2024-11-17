@@ -14,7 +14,9 @@
 
     <div class="col-md-3 text-end">
       <button type="button" class="btn btn-outline-primary me-2">Login</button>
-      <button type="button" class="btn btn-primary">Sign-up</button>
+      @if (!registerMode) {
+        <button (click)="registerToggle()" class="btn btn-primary">Register</button>
+      }
     </div>
   </header>
 </div>
