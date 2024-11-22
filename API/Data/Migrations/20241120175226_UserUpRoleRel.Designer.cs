@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241120173250_updateRole")]
-    partial class updateRole
+    [Migration("20241120175226_UserUpRoleRel")]
+    partial class UserUpRoleRel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

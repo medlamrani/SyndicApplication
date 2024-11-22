@@ -16,6 +16,6 @@ public class DataContext(DbContextOptions options) : DbContext(options)
             .HasOne(u => u.Role)
             .WithMany(r => r.Users)
             .HasForeignKey(u => u.RoleId)
-            .OnDelete(DeleteBehavior.Cascade);;
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
