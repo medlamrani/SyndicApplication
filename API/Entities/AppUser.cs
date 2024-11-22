@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace API.Entities
 {
     public class AppUser
@@ -7,5 +9,7 @@ namespace API.Entities
         public required string Email { get; set; }
         public required byte[] PasswordHash { get; set; }
         public required byte[] PasswordSalt { get; set; }
+        public int RoleId { get; set; } 
+        public Role Role { get; set; } = null!;
     }
 }

@@ -10,5 +10,7 @@ namespace API.DTOs
         public required string Email { get; set; } 
         [Required]
         public required string Password { get; set; } 
+        [Required]
+        public required int Role { get; set; }
     }
 }
