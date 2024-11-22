@@ -9,7 +9,7 @@ namespace API.Entities
         public required string Email { get; set; }
         public required byte[] PasswordHash { get; set; }
         public required byte[] PasswordSalt { get; set; }
-
-        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public int RoleId { get; set; } 
+        public Role Role { get; set; } = null!;
     }
 }

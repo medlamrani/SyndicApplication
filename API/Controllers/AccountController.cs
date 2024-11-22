@@ -23,7 +23,8 @@ namespace API.Controllers
                 FullName = registerDto.Fullname,
                 Email = registerDto.Email.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                RoleId = registerDto.Role,
             };
 
 
@@ -31,8 +32,10 @@ namespace API.Controllers
             await context.SaveChangesAsync();
 
             return new UserDto {
+                FullName = user.FullName,
                 Email = user.Email,
-                Token = tokenService.CreateToken(user)
+                Token = tokenService.CreateToken(user),
+                RoleId = user.RoleId
             };
         }
 
@@ -53,8 +56,10 @@ namespace API.Controllers
 
             return new UserDto 
             {
+                FullName = user.FullName,
                 Email = user.Email,
-                Token = tokenService.CreateToken(user)
+                Token = tokenService.CreateToken(user),
+                RoleId = user.RoleId
             };
         }
 

@@ -16,10 +16,11 @@ export class RegisterComponent {
   model: any = {}
 
   register() {
+    this.model.role = 1;
     this.accountService.register(this.model).subscribe({
       next: response => {
-         console.log(response);
-         this.cancel();
+        console.log(response);
+        this.cancel();
       },
       error: error => console.log(error)
     })
