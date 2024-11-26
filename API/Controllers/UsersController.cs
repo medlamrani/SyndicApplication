@@ -15,7 +15,6 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             var users = await userRepository.GetUsersAsync();
-            
             return Ok(users);
         }     
 
