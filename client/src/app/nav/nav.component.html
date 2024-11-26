@@ -4,16 +4,17 @@
       @if (accountService.currentUser()) {
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-              <a class="nav-link">Projects</a>
+              <a routerLink="/projects" routerLinkActive="active" class="nav-link">Projects</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link">Residents</a>
+              <a routerLink="/residents" routerLinkActive="active" class="nav-link">Residents</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link">Messages</a>
+              <a routerLink="/messages" routerLinkActive="active" class="nav-link">Messages</a>
           </li>
       </ul>
       }
+      
       @if (accountService.currentUser()) {
         <div dropdown class="dropdown">
           <a dropdownToggle class="btn btn-primary  dropdown-toggle text-light">
@@ -25,6 +26,7 @@
           </div>
         </div>
         }
+        
       
         @if (!accountService.currentUser()) {
         <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off">
