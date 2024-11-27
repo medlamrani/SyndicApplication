@@ -17,19 +17,24 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
 
-        public Task<AppUser> GetUserByEmailAsync(string email)
+        public async Task<AppUser?> GetUserByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await context.Users
+                .Where(e => e.Email == email)
+                .SingleOrDefaultAsync();
         }
 
-        public Task<AppUser> GetUserByIdAsync(int id)
+        public async Task<AppUser?> GetUserByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await context.Users
+                .Where(e => e.Id == id)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await context.Users.ToListAsync();
+            return await context.Users
+                    .ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()
