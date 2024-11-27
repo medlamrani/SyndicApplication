@@ -2,11 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { AccountService } from '../_services/account.service';
+import { DefaultComponent } from "../default/default.component";
+import { ManagerComponent } from "../manager/manager.component";
+import { AdminComponent } from "../admin/admin.component";
+import { AppComponent } from "../app.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RegisterComponent],
+  imports: [RegisterComponent, DefaultComponent, ManagerComponent, AdminComponent, AppComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

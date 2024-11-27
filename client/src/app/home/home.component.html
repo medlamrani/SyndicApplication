@@ -23,12 +23,17 @@
 
         @if (accountService.currentUser()?.roleId === 1)
         {
-            <h1>Manage your residence</h1>
-                <p class="lead">All you need to do is sign up!</p>
-                <div class="tet-center">
-                    <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">Register</button>
-                    <button class="btn btn-info btn-lg me-2">Learn more</button>
-                </div>
+            <app-default></app-default>
         }
+        @else if (accountService.currentUser()?.roleId === 2) 
+        {
+            <app-admin></app-admin>
+        }
+        @else if (accountService.currentUser()?.roleId === 3 || 4) 
+        {
+            <app-manager></app-manager>
+        }
+
+        
     </div>
 </div>

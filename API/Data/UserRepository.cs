@@ -20,17 +20,14 @@ namespace API.Data
         public async Task<AppUser?> GetUserByEmailAsync(string email)
         {
             return await context.Users
-                .Where(e => e.Email == email)
-                .SingleOrDefaultAsync();
+                .Include(x => x.Role)
+                .SingleOrDefaultAsync(e => e.Email == email);
         }
 
         public async Task<AppUser?> GetUserByIdAsync(int id)
         {
-            return await context.Users
-                .Where(e => e.Id == id)
-                .SingleOrDefaultAsync();
+            return await context.Users.FindAsync(id);
         }
-
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await context.Users
