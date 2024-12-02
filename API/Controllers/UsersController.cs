@@ -9,14 +9,34 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
     [Authorize]
-    public class UsersController(IUserRepository userRepository) : BaseApiController
+    public class UsersController(DataContext context, IUserRepository userRepository) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             var users = await userRepository.GetUsersAsync();
             return Ok(users);
-        }     
+        }  
+
+        [HttpGet("admins")]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetAdmins()
+        {
+            var admin = await context.Users
+                    .Where(r => r.RoleId == 1)
+                    .ToListAsync();
+
+            return admin;
+        }  
+
+        [HttpGet("managers")]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetManagers()
+        {
+            var manager = await context.Users
+                    .Where(r => r.RoleId == 2)
+                    .ToListAsync();
+
+            return manager;
+        } 
 
         
         [HttpGet("{email}")]
