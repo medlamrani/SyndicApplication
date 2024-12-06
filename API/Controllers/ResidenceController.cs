@@ -11,7 +11,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Residence>>> GetResidence()
         {
-            var residence = await context.Residences.ToListAsync();
+            var residence = await context.Residences
+                            .Include(x => x.Immeubles)
+                            .ToListAsync();
             return residence;
         }
 
@@ -47,10 +49,23 @@ namespace API.Controllers
             return imm;
         }
 
+        [HttpGet("immeublelist/{id:int}")]
+        public async Task<ActionResult<IEnumerable<Immeuble>>> ListImmeubleByResidenceId(int id)
+        {
+            var immeubles = await context.Immeubles
+                .Where(x => x.ResidenceId == id)
+                .Include(x => x.Appartements)
+                .ToListAsync();
+            return immeubles;
+        }
+
         [HttpPost("addappartement")]
         public async Task<ActionResult<Appartement>> CreateAppartement(AppartementDto appartementDto)
         {
             //if (await IsManager()!) return BadRequest("You are not the manager");
+            var numberExist = await context.Appartements.AnyAsync(x => x.Number == appartementDto.Number);
+            if(numberExist) return BadRequest("This Appartement already exist");
+
             var app = new Appartement
             {
                 Number = appartementDto.Number,
@@ -61,6 +76,13 @@ namespace API.Controllers
             await context.SaveChangesAsync();
 
             return app;
+        }
+
+        [HttpGet("appartlist/{id:int}")]
+        public async Task<ActionResult<IEnumerable<Appartement>>> ListAppartementByResidenceId(int id)
+        {
+            var appart = await context.Appartements.Where(x => x.ImmeubleId == id).ToListAsync();
+            return appart;
         }
 
 
