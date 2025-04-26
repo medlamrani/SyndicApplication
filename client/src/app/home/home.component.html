@@ -23,15 +23,15 @@
 
         @if (accountService.currentUser()?.roleId === 1)
         {
-            <app-default></app-default>
+            <app-admin></app-admin>
         }
         @else if (accountService.currentUser()?.roleId === 2) 
         {
-            <app-admin></app-admin>
+            <app-manager></app-manager>
         }
         @else if (accountService.currentUser()?.roleId === 3 || 4) 
         {
-            <app-manager></app-manager>
+            <app-default></app-default>
         }
 
         

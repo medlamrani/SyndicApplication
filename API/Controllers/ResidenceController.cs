@@ -1,6 +1,9 @@
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +18,33 @@ namespace API.Controllers
                             .Include(x => x.Immeubles)
                             .ToListAsync();
             return residence;
+        }
+
+        [HttpGet("dashboard")]
+        public async Task<ActionResult> GetDashboard()
+        {  
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if(email == null) return BadRequest("No User was found");
+            Console.WriteLine(email);
+
+            var user = await context.Users.FirstOrDefaultAsync(e => e.Email == email);
+
+            if (user == null) return BadRequest("User not found");
+
+            var residence = await context.Residences
+                            .Include(x => x.Immeubles)
+                            .ThenInclude(x => x.Appartements)
+                            .FirstOrDefaultAsync(x => x.ManagerId == user.Id);
+
+            if(residence == null) return BadRequest("No Residence was found");
+
+            return Ok(new
+            {
+                ResidenceName = residence.Name,
+                ImmeubleCount = residence.Immeubles.Count,
+                AppartementCount = residence.Immeubles.Sum(i => i.Appartements.Count)
+            });
+            
         }
 
         [HttpPost("add")]
@@ -63,7 +93,9 @@ namespace API.Controllers
         public async Task<ActionResult<Appartement>> CreateAppartement(AppartementDto appartementDto)
         {
             //if (await IsManager()!) return BadRequest("You are not the manager");
-            var numberExist = await context.Appartements.AnyAsync(x => x.Number == appartementDto.Number);
+            var numberExist = await context.Appartements
+                                .Where(x => x.ImmeubleId == appartementDto.ImmeubleId)
+                                .AnyAsync(x => x.Number == appartementDto.Number);
             if(numberExist) return BadRequest("This Appartement already exist");
 
             var app = new Appartement
@@ -83,13 +115,6 @@ namespace API.Controllers
         {
             var appart = await context.Appartements.Where(x => x.ImmeubleId == id).ToListAsync();
             return appart;
-        }
-
-
-        private async Task<bool> IsManager()
-        {
-            var user = await context.Users.AnyAsync(x => x.RoleId == 2);
-            return user;
         }
     }
 }
