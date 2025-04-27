@@ -23,25 +23,46 @@ namespace API.Controllers
         [HttpGet("dashboard")]
         public async Task<ActionResult> GetDashboard()
         {  
+<<<<<<< HEAD
             int id = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             if(id == 0) return BadRequest("No User was found");
             Console.WriteLine(id);
 
             var user = await context.Users.FirstOrDefaultAsync(e => e.Id == id);
+=======
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if(email == null) return BadRequest("No User was found");
+            Console.WriteLine(email);
+
+            var user = await context.Users.FirstOrDefaultAsync(e => e.Email == email);
+
+            if (user == null) return BadRequest("User not found");
+>>>>>>> aeacc977a8d55892f6d9f8bbb55a24101f1a38bb
 
             var residence = await context.Residences
                             .Include(x => x.Immeubles)
                             .ThenInclude(x => x.Appartements)
+<<<<<<< HEAD
                             .FirstOrDefaultAsync(x => x.ManagerId == id);
 
             if(residence == null) return BadRequest("No Residence was found");
             
+=======
+                            .FirstOrDefaultAsync(x => x.ManagerId == user.Id);
+
+            if(residence == null) return BadRequest("No Residence was found");
+
+>>>>>>> aeacc977a8d55892f6d9f8bbb55a24101f1a38bb
             return Ok(new
             {
                 ResidenceName = residence.Name,
                 ImmeubleCount = residence.Immeubles.Count,
                 AppartementCount = residence.Immeubles.Sum(i => i.Appartements.Count)
             });
+<<<<<<< HEAD
+=======
+            
+>>>>>>> aeacc977a8d55892f6d9f8bbb55a24101f1a38bb
         }
 
         [HttpPost("add")]
@@ -112,13 +133,6 @@ namespace API.Controllers
         {
             var appart = await context.Appartements.Where(x => x.ImmeubleId == id).ToListAsync();
             return appart;
-        }
-
-
-        private async Task<bool> IsManager()
-        {
-            var user = await context.Users.AnyAsync(x => x.RoleId == 2);
-            return user;
         }
     }
 }
