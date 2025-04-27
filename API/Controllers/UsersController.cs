@@ -12,7 +12,7 @@ namespace API.Controllers
     public class UsersController(DataContext context, IUserRepository userRepository) : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             var users = await userRepository.GetUsersAsync();
             return Ok(users);

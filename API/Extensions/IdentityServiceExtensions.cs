@@ -9,7 +9,8 @@ namespace API.Extensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
         IConfiguration config)
     {
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
             var tokenKey = config["TokenKey"] ?? throw new Exception("Token not found");
             options.TokenValidationParameters = new TokenValidationParameters

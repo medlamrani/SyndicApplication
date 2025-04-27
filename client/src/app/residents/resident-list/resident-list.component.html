@@ -1,5 +1,7 @@
+@if (accountService.currentUser()) {}
+<h1>Your Residence should appear here!</h1>
 <ul>
-    @for (user of users; track user.id) {
-    <li>{{user.id}} - {{user.fullName}} - {{user.email}}</li>
-    }
+@for (user of users; track user.id) {
+<li>{{user.id}} -- {{user.fullName}} -- {{user.email}}</li>
+}
 </ul>

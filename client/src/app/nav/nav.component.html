@@ -4,6 +4,9 @@
       @if (accountService.currentUser()) {
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
+              <a routerLink="/manager" routerLinkActive="active" class="nav-link">DashBoard</a>
+          </li>
+          <li class="nav-item">
               <a routerLink="/projects" routerLinkActive="active" class="nav-link">Projects</a>
           </li>
           <li class="nav-item">

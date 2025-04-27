@@ -21,15 +21,15 @@
             </div>
         }
 
-        @if (accountService.currentUser()?.roleId === 1)
+        @if (accountService.currentUser()?.roleId === 3)
         {
             <app-default></app-default>
         }
-        @else if (accountService.currentUser()?.roleId === 2) 
+        @else if (accountService.currentUser()?.roleId === 1) 
         {
             <app-admin></app-admin>
         }
-        @else if (accountService.currentUser()?.roleId === 3 || 4) 
+        @else if (accountService.currentUser()?.roleId === 2) 
         {
             <app-manager></app-manager>
         }

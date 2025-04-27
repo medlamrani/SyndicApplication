@@ -5,26 +5,22 @@ import { AccountService } from '../_services/account.service';
 import { DefaultComponent } from "../default/default.component";
 import { ManagerComponent } from "../manager/manager.component";
 import { AdminComponent } from "../admin/admin.component";
-import { AppComponent } from "../app.component";
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RegisterComponent, DefaultComponent, ManagerComponent, AdminComponent, AppComponent],
+  imports: [RegisterComponent, DefaultComponent, ManagerComponent, AdminComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   http = inject(HttpClient);
   accountService = inject(AccountService);
   registerMode = false;
+  url = environment.apiUrl;
   users: any;
   
-  
-  ngOnInit(): void {
-    this.accountService.currentUser();
-    console.log(this.accountService.currentUser());
-  }
 
   registerToggle() {
     this.registerMode = !this.registerMode
@@ -35,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUsers() {
-    this.http.get('https://localhost:6001/api/users').subscribe({
+    this.http.get(this.url + 'users').subscribe({
       next: response => this.users = response,
       error: error => console.log(error),
       complete: () => console.log('Request has completed')

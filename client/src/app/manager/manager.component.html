@@ -1,1 +1,6 @@
-<p>manager works!</p>
+<h1>Manager Dashboard</h1>
+<div *ngIf="dashboardData">
+    <p>Residence Name: {{ dashboardData.residenceName }}</p>
+    <p>Total Immeubles: {{ dashboardData.immeubleCount }}</p>
+    <p>Total Appartements: {{ dashboardData.appartementCount }}</p>
+</div>

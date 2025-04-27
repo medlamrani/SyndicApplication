@@ -6,6 +6,7 @@ import { ProjectListComponent } from './projects/project-list/project-list.compo
 import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
 import { ResidentDetailComponent } from './residents/resident-detail/resident-detail.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ManagerComponent } from './manager/manager.component';
 
 export const routes: Routes = [
     {path: '',component: HomeComponent},
@@ -18,8 +19,9 @@ export const routes: Routes = [
             {path: 'projects/:id' ,component: ProjectDetailComponent},            
             {path: 'residents',component: ResidentListComponent},
             {path: 'residents/:id' ,component: ResidentDetailComponent},
-            {path: 'messages' ,component: MessagesComponent}
+            {path: 'messages' ,component: MessagesComponent},
+            {path: 'manager', component: ManagerComponent}
         ]
     },
-    {path: '**', component: HomeComponent, pathMatch: 'full'}
+    {path: '**', component: HomeComponent, pathMatch: 'full'},
 ];
